@@ -57,16 +57,16 @@ public class Ledger {
 
             switch(userInput){ // Ledger Menu
                 case "A":
-                    displayAll();
+                    displayAll(); // Runs custom static method called displayAll
                     break;
                 case "D":
-                    displayDeps();
+                    displayDeps();  // Runs custom static method called displayDeps
                     break;
                 case "P":
-                    displayPays();
+                    displayPays(); // Runs custom static method called displayPays
                     break;
                 case "R":
-                    runReports();
+                    runReports(); // Runs custom static method called runReports
                     break;
                 default:
                     System.out.println("Input command not found.");
@@ -80,7 +80,43 @@ public class Ledger {
     }
     public static void displayDeps(){}
     public static void displayPays(){}
-    public static void runReports(){}
+    public static void runReports(){
+        int subInput;
+        String subInput;
+        do{
+
+            subInput = scanner.nextInt();
+
+            System.out.println("\t1) Month to Date"); //
+            System.out.println("\t2) Previous Month"); //
+            System.out.println("\t3) Year to Date"); //
+            System.out.println("\t4) Previous Year"); //
+            System.out.println("\t5) Search by Vendor"); // user will be prompted for the vendor name
+            System.out.println("\t0) Back."); // back to Report page
+            System.out.println("\tH) Home."); // back to Ledger Home
+
+            switch(subInput){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 0:
+                    break;
+                case "H":
+                    break;
+                default:
+                    System.out.println("Input command not found.");
+            }
+
+        } while (!subInput.equalsIgnoreCase("H"));
+
+    }
 
 
 }
