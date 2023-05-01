@@ -1,8 +1,13 @@
 package com.kf;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ledger {
+    // create static scanner instance
+    // create static variable called , It will be an ArrayList of positive transactions
+    static ArrayList<Transactions> transactions = new ArrayList<Transactions>();
+
     static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         // Initialize variable for user input
@@ -15,7 +20,7 @@ public class Ledger {
             System.out.println("\tP) Make Payment (Debit)");
             System.out.println("\tL) Ledger");
             System.out.println("\tX) Exit.");
-            System.out.print("");
+            System.out.print("Command");
 
             userInput = scanner.nextLine();
 
@@ -51,6 +56,7 @@ public class Ledger {
             System.out.println("\tD) Deposits"); // only displays the entries that are deposits into the account
             System.out.println("\tP) Payments");// only displays the negative entries/payments
             System.out.println("\tR) Reports"); // screen allows user to run pre-defined reports or to run a custom search
+            System.out.println("\tH) Home."); // back to Ledger Home
             System.out.print("Command: ");
 
             userInput = scanner.nextLine();
@@ -68,6 +74,8 @@ public class Ledger {
                 case "R":
                     runReports(); // Runs custom static method called runReports
                     break;
+                case "H":
+                    break;
                 default:
                     System.out.println("Input command not found.");
             }
@@ -78,11 +86,12 @@ public class Ledger {
     public static void displayAll(){
 
     }
-    public static void displayDeps(){}
+    public static void displayDeps(){
+
+    }
     public static void displayPays(){}
     public static void runReports(){
         int subInput;
-        String subInput;
         do{
 
             subInput = scanner.nextInt();
@@ -93,7 +102,6 @@ public class Ledger {
             System.out.println("\t4) Previous Year"); //
             System.out.println("\t5) Search by Vendor"); // user will be prompted for the vendor name
             System.out.println("\t0) Back."); // back to Report page
-            System.out.println("\tH) Home."); // back to Ledger Home
 
             switch(subInput){
                 case 1:
@@ -107,14 +115,12 @@ public class Ledger {
                 case 5:
                     break;
                 case 0:
-                    break;
-                case "H":
-                    break;
+                    return;
                 default:
                     System.out.println("Input command not found.");
             }
 
-        } while (!subInput.equalsIgnoreCase("H"));
+        } while (subInput != 0 );
 
     }
 
