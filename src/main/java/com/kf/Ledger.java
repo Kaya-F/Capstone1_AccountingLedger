@@ -167,8 +167,8 @@ public class Ledger {
 
     }
     public static void displayDeps(){
-        for (Transaction currenDeps : transactions) {
-            System.out.println(currentDeps);
+        for (Transaction currentDep : transactions) {
+            System.out.println(currentDep);
         }
     }
     public static void displayPays(){}
