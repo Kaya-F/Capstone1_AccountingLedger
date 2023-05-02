@@ -1,13 +1,13 @@
 package com.kf;
 
 public class Transaction {
-    private float date;
-    private float time;
+    private String date;
+    private String time;
     private String desc;
     private String vendor;
     private float amount;
 
-    public Transaction(float date, float time, String desc, String vendor, float amount) {
+    public Transaction(String date, String time, String desc, String vendor, float amount) {
         this.date = date;
         this.time = time;
         this.desc = desc;
@@ -15,19 +15,19 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public float getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(float date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public float getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(float time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -57,6 +57,6 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return date + "\\|" + time + "\\|" + desc + "\\|" + vendor + "\\|" + amount;
+        return "\n" + date + "|" + time + "|" + desc + "|" + vendor + "|" + amount;
     }
 }

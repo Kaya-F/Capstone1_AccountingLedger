@@ -1,11 +1,10 @@
 package com.kf;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.time.*;
 import java.util.Scanner;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 
 public class Ledger {
     // create static scanner instance
@@ -16,9 +15,11 @@ public class Ledger {
 
 
     public static void main(String[] args) {
+
+        loadTransactionsFromFile();
+
         // Initialize variable for user input
         String userInput;
-
         // Create do-while loop that runs unless the user enters "4"
         do {// Create main menu:
             System.out.println("| Home |");
@@ -43,6 +44,7 @@ public class Ledger {
                     break;
                 case "X":
                     System.out.println("Exiting Application...");
+                    break;
                 default:
                     System.out.println("Input command not found.");
             }
@@ -50,14 +52,17 @@ public class Ledger {
         } while(!userInput.equalsIgnoreCase("4"));
 
     }
+    public static void loadTransactionsFromFile(){
+        //readfromfile (work on bufferedreader)
+    }
     public static void addDeposit(){
 
         System.out.println("\t| Add Deposit |");
         System.out.println("Date of deposit (YYYY-MM-DD): ");
-        float date = scanner.nextFloat();
+        String date = scanner.nextLine();
 
         System.out.println("Time of deposit (HH:MM:SS): ");
-        float time = scanner.nextFloat();
+        String time = scanner.nextLine();
 
         System.out.println("Short description of deposit: ");
         String desc = scanner.nextLine();
@@ -75,11 +80,11 @@ public class Ledger {
         transactions.add(deposit);
 
         try {
-            FileWriter fileWriter = new FileWriter("./src/main/java/com/kf/Transactions.csv");
+            FileWriter fileWriter = new FileWriter("./src/main/java/com/kf/Transactions.txt", true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write( "Deposit: " + date + "|" + time + "|" + desc + "|" + vendor + "|" + amount);
+            bufferedWriter.write("\n" + date + "|" + time + "|" + desc + "|" + vendor + "|" + amount);
             System.out.println("Deposit added successfully. ");
-            fileWriter.close();
+            bufferedWriter.close();
 
         } catch (IOException e) {
             System.out.println("Unsuccessful Deposit. ");
@@ -92,10 +97,10 @@ public class Ledger {
     public static void makePayment(){
         System.out.println("\t| Make Payment |");
         System.out.println("Date of payment (YYYY-MM-DD): ");
-        float date = scanner.nextFloat();
+        String date = scanner.nextLine();
 
         System.out.println("Time of payment (HH:MM:SS): ");
-        float time = scanner.nextFloat();
+        String time = scanner.nextLine();
 
         System.out.println("Short description of payment: ");
         String desc = scanner.nextLine();
@@ -113,11 +118,11 @@ public class Ledger {
         transactions.add(payment);
 
         try {
-            FileWriter fileWriter = new FileWriter("./src/main/java/com/kf/Transactions.csv");
+            FileWriter fileWriter = new FileWriter("./src/main/java/com/kf/Transactions.txt", true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write( "Payment: " + date + "|" + time + "|" + desc + "|" + vendor + "|" + amount);
+            bufferedWriter.write("\n" + date + "|" + time + "|" + desc + "|" + vendor + "|" + amount);
             System.out.println("Payment made successfully. ");
-            fileWriter.close();
+            bufferedWriter.close();
 
         } catch (IOException e) {
             System.out.println("Unsuccessful Payment. ");
@@ -161,20 +166,29 @@ public class Ledger {
 
     }
     public static void displayAll(){
-        for (Transaction currentTransaction : transactions) {
-            System.out.println(currentTransaction);
+        for (Transaction transaction : transactions) {
+            System.out.println(transaction);
         }
 
     }
     public static void displayDeps(){
-        for (Transaction currentDep : transactions) {
-            System.out.println(currentDep);
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() > 0 ) {
+                System.out.println(transaction.getAmount());
+            }
         }
     }
-    public static void displayPays(){}
-    public static void runReports(){
+    public static void displayPays(){
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() < 0 ) {
+                System.out.println(transaction.getAmount());
+            }
+        }
+    }
+    public static void runReports() {
         int subInput;
-        do{
+        LocalDate today = LocalDate.now();
+        do {
 
             subInput = scanner.nextInt();
 
@@ -185,7 +199,7 @@ public class Ledger {
             System.out.println("\t5) Search by Vendor"); // user will be prompted for the vendor name
             System.out.println("\t0) Back."); // back to Report page
 
-            switch(subInput){
+            switch (subInput) {
                 case 1:
                     break;
                 case 2:
@@ -202,10 +216,20 @@ public class Ledger {
                     System.out.println("Input command not found.");
             }
 
-        } while (subInput != 0 );
-
+        } while (subInput != 0);
 
 
     }
+    public static void readFile(){
+        try {
+            FileReader transactionFile = new FileReader(".src/main/java/com/kf/Transactions.txt");
+            BufferedReader bufferedReader = new BufferedReader(transactionFile);
 
+            bufferedReader.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+    }
 }
