@@ -89,7 +89,41 @@ public class Ledger {
 
 
 
-    public static void makePayment(){}
+    public static void makePayment(){
+        System.out.println("\t| Make Payment |");
+        System.out.println("Date of payment (YYYY-MM-DD): ");
+        float date = scanner.nextFloat();
+
+        System.out.println("Time of payment (HH:MM:SS): ");
+        float time = scanner.nextFloat();
+
+        System.out.println("Short description of payment: ");
+        String desc = scanner.nextLine();
+
+        System.out.println("Vendor of payment: ");
+        String vendor = scanner.nextLine();
+
+
+        System.out.println("Amount for payment: ");
+        float amount = scanner.nextFloat();
+        scanner.nextLine();
+
+
+        Transaction payment = new Transaction(date, time, desc, vendor, amount);
+        transactions.add(payment);
+
+        try {
+            FileWriter fileWriter = new FileWriter("./src/main/java/com/kf/Transactions.csv");
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write( "Payment: " + date + "|" + time + "|" + desc + "|" + vendor + "|" + amount);
+            System.out.println("Payment made successfully. ");
+            fileWriter.close();
+
+        } catch (IOException e) {
+            System.out.println("Unsuccessful Payment. ");
+            e.printStackTrace();
+        }
+    }
 
     public static void openLedger(){
         String userInput;
@@ -118,7 +152,7 @@ public class Ledger {
                     runReports(); // Runs custom static method called runReports
                     break;
                 case "H":
-                    break;
+                    return;
                 default:
                     System.out.println("Input command not found.");
             }
@@ -133,7 +167,9 @@ public class Ledger {
 
     }
     public static void displayDeps(){
-
+        for (Transaction currenDeps : transactions) {
+            System.out.println(currentDeps);
+        }
     }
     public static void displayPays(){}
     public static void runReports(){
@@ -168,8 +204,7 @@ public class Ledger {
 
         } while (subInput != 0 );
 
-    }
-    public static void readFromFile(){
+
 
     }
 
