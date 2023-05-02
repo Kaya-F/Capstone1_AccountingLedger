@@ -1,14 +1,20 @@
 package com.kf;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
 public class Ledger {
     // create static scanner instance
-    // create static variable called , It will be an ArrayList of positive transactions
-    static ArrayList<Transactions> transactions = new ArrayList<Transactions>();
-
+    // create static variable called transactions, It will be an ArrayList of positive transactions
+    // create static instance FileWriter object
+    static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
     static Scanner scanner = new Scanner(System.in);
+
+
     public static void main(String[] args) {
         // Initialize variable for user input
         String userInput;
@@ -20,7 +26,7 @@ public class Ledger {
             System.out.println("\tP) Make Payment (Debit)");
             System.out.println("\tL) Ledger");
             System.out.println("\tX) Exit.");
-            System.out.print("Command");
+            System.out.print("Command: ");
 
             userInput = scanner.nextLine();
 
@@ -44,7 +50,44 @@ public class Ledger {
         } while(!userInput.equalsIgnoreCase("4"));
 
     }
-    public static void addDeposit(){}
+    public static void addDeposit(){
+
+        System.out.println("\t| Add Deposit |");
+        System.out.println("Date of deposit (YYYY-MM-DD): ");
+        float date = scanner.nextFloat();
+
+        System.out.println("Time of deposit (HH:MM:SS): ");
+        float time = scanner.nextFloat();
+
+        System.out.println("Short description of deposit: ");
+        String desc = scanner.nextLine();
+
+        System.out.println("Vendor of deposit: ");
+        String vendor = scanner.nextLine();
+
+
+        System.out.println("Amount for deposit: ");
+        float amount = scanner.nextFloat();
+        scanner.nextLine();
+
+
+        Transaction deposit = new Transaction(date, time, desc, vendor, amount);
+        transactions.add(deposit);
+
+        try {
+            FileWriter fileWriter = new FileWriter("./src/main/java/com/kf/Transactions.csv");
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write( "Deposit: " + date + "|" + time + "|" + desc + "|" + vendor + "|" + amount);
+            System.out.println("Deposit added successfully. ");
+            fileWriter.close();
+
+        } catch (IOException e) {
+            System.out.println("Unsuccessful Deposit. ");
+            e.printStackTrace();
+        }
+    }
+
+
 
     public static void makePayment(){}
 
@@ -84,6 +127,9 @@ public class Ledger {
 
     }
     public static void displayAll(){
+        for (Transaction currentTransaction : transactions) {
+            System.out.println(currentTransaction);
+        }
 
     }
     public static void displayDeps(){
@@ -123,6 +169,8 @@ public class Ledger {
         } while (subInput != 0 );
 
     }
+    public static void readFromFile(){
 
+    }
 
 }

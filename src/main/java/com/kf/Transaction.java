@@ -1,13 +1,13 @@
 package com.kf;
 
-public class Transactions {
+public class Transaction {
     private float date;
     private float time;
     private String desc;
     private String vendor;
     private float amount;
 
-    public Transactions(float date, float time, String desc, String vendor, float amount) {
+    public Transaction(float date, float time, String desc, String vendor, float amount) {
         this.date = date;
         this.time = time;
         this.desc = desc;
