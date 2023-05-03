@@ -1,8 +1,9 @@
 package com.kf;
 
 import java.io.*;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.time.*;
 import java.util.Scanner;
 
@@ -12,7 +13,6 @@ public class Ledger {
     // create static instance FileWriter object
     static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
     static Scanner scanner = new Scanner(System.in);
-
 
     public static void main(String[] args) {
 
@@ -53,8 +53,17 @@ public class Ledger {
 
     }
     public static void loadTransactionsFromFile(){
-        //readfromfile (work on bufferedreader)
+        try {
+            FileReader readFromFile = new FileReader("./src/main/java/com/kf/Transactions.txt");
+            BufferedReader bufferedReader = new BufferedReader(readFromFile);
+
+            bufferedReader.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
+
     public static void addDeposit(){
 
         System.out.println("\t| Add Deposit |");
@@ -157,6 +166,7 @@ public class Ledger {
                     runReports(); // Runs custom static method called runReports
                     break;
                 case "H":
+                    System.out.println("Returning to Home...");
                     return;
                 default:
                     System.out.println("Input command not found.");
@@ -187,28 +197,49 @@ public class Ledger {
     }
     public static void runReports() {
         int subInput;
+        String vendorName;
         LocalDate today = LocalDate.now();
         do {
-
-            subInput = scanner.nextInt();
-
             System.out.println("\t1) Month to Date"); //
             System.out.println("\t2) Previous Month"); //
             System.out.println("\t3) Year to Date"); //
             System.out.println("\t4) Previous Year"); //
             System.out.println("\t5) Search by Vendor"); // user will be prompted for the vendor name
             System.out.println("\t0) Back."); // back to Report page
+            System.out.print("Command: ");
 
+            subInput = scanner.nextInt();
             switch (subInput) {
                 case 1:
+                   System.out.println("Start date of reports (YYYY-MM-DD):");
+                   String startDate = scanner.nextLine();
+                   System.out.println("End date (YYYY-MM-DD):");
+                   String endDate = scanner.nextLine();
+
                     break;
                 case 2:
+                    System.out.print("| Last Month's Reports |");
                     break;
                 case 3:
+                    System.out.println("Start year of  (YYYY-MM-DD):");
+                    String startYear = scanner.nextLine();
+                    System.out.println("End date (YYYY-MM-DD):");
+                    String endToDate = scanner.nextLine();
                     break;
                 case 4:
+                    System.out.print("| Last Year's Reports |");
                     break;
                 case 5:
+                    System.out.println("\nEnter Vendor name or...");
+                    vendorName = scanner.nextLine();
+                    for (Transaction transaction : transactions) {
+                        System.out.println(transaction);
+                        if(vendorName.equalsIgnoreCase(transaction.getVendor())){
+//                            System.out.println(transaction.getVendor());
+//                            break;
+                        }
+                    }
+
                     break;
                 case 0:
                     return;
@@ -220,16 +251,6 @@ public class Ledger {
 
 
     }
-    public static void readFile(){
-        try {
-            FileReader transactionFile = new FileReader(".src/main/java/com/kf/Transactions.txt");
-            BufferedReader bufferedReader = new BufferedReader(transactionFile);
-
-            bufferedReader.close();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
 
 
-    }
 }
