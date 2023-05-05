@@ -9,6 +9,3 @@
 2023-05-01|15:30:00|Gaming Keyboard|Razer|-199.0
 2022-08-10|12:30:00|Smart Thermostat|Amazon|-199.0
 2022-10-20|09:15:00|Bluetooth Speaker|JBL|-79.99
-
-
-

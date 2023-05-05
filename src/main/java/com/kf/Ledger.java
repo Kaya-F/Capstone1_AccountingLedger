@@ -1,10 +1,10 @@
 package com.kf;
-
 import java.io.*;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 import java.time.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Ledger {
@@ -59,11 +59,10 @@ public class Ledger {
             FileReader transactionFile = new FileReader("./src/main/java/com/kf/transactions.txt");
             BufferedReader bufferedReader = new BufferedReader(transactionFile);
 
-
-            String line = bufferedReader.readLine();
+            String line;
 
             // Create a variable that stores a property instance using the data from the current line
-            while (line != null) {
+            while((line = bufferedReader.readLine()) != null){
                 // Parse/Split the line on "|" and store in variable
                 String[] splitLine = line.split("\\|");
                 String date = splitLine[0];
@@ -75,7 +74,6 @@ public class Ledger {
                 Transaction transaction = new Transaction(date, time, desc, vendor, amount);
                 transactions.add(transaction);
 
-//                line = bufferedReader.readLine();
             }
             // Close the scanner instance
             bufferedReader.close();
