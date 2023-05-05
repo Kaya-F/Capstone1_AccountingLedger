@@ -49,20 +49,44 @@ public class Ledger {
                     System.out.println("Input command not found.");
             }
 
-        } while(!userInput.equalsIgnoreCase("4"));
+        } while(!userInput.equalsIgnoreCase("X"));
 
     }
     public static void loadTransactionsFromFile(){
-        try {
-            FileReader readFromFile = new FileReader("./src/main/java/com/kf/Transactions.txt");
-            BufferedReader bufferedReader = new BufferedReader(readFromFile);
+        // Read data from file
+        try { // Create a try/catch statement to handle file import
+            // Create an instance of FileReader with an approximate path of "./src/main/java/com/kf/transactions.txt"
+            FileReader transactionFile = new FileReader("./src/main/java/com/kf/transactions.txt");
+            BufferedReader bufferedReader = new BufferedReader(transactionFile);
 
+
+            String line = bufferedReader.readLine();
+
+            // Create a variable that stores a property instance using the data from the current line
+            while (line != null) {
+                // Parse/Split the line on "|" and store in variable
+                String[] splitLine = line.split("\\|");
+                String date = splitLine[0];
+                String time = splitLine[1];
+                String desc = splitLine[2];
+                String vendor = splitLine[3];
+                float amount = Float.parseFloat(splitLine[4]);
+
+                Transaction transaction = new Transaction(date, time, desc, vendor, amount);
+                transactions.add(transaction);
+
+//                line = bufferedReader.readLine();
+            }
+            // Close the scanner instance
             bufferedReader.close();
+            // Handle catch/exception
         } catch (IOException e){
+            System.out.println("Failed to load transactions from file.");
             e.printStackTrace();
         }
 
     }
+
 
     public static void addDeposit(){
 
@@ -119,7 +143,7 @@ public class Ledger {
 
 
         System.out.println("Amount for payment: ");
-        float amount = scanner.nextFloat();
+        float amount = scanner.nextFloat() * -1;
         scanner.nextLine();
 
 
@@ -172,7 +196,7 @@ public class Ledger {
                     System.out.println("Input command not found.");
             }
 
-        } while (!userInput.equalsIgnoreCase("3"));
+        } while (!userInput.equalsIgnoreCase("H"));
 
     }
     public static void displayAll(){
@@ -198,7 +222,6 @@ public class Ledger {
     public static void runReports() {
         int subInput;
         String vendorName;
-        LocalDate today = LocalDate.now();
         do {
             System.out.println("\t1) Month to Date"); //
             System.out.println("\t2) Previous Month"); //
@@ -211,20 +234,11 @@ public class Ledger {
             subInput = scanner.nextInt();
             switch (subInput) {
                 case 1:
-                   System.out.println("Start date of reports (YYYY-MM-DD):");
-                   String startDate = scanner.nextLine();
-                   System.out.println("End date (YYYY-MM-DD):");
-                   String endDate = scanner.nextLine();
-
                     break;
                 case 2:
                     System.out.print("| Last Month's Reports |");
                     break;
                 case 3:
-                    System.out.println("Start year of  (YYYY-MM-DD):");
-                    String startYear = scanner.nextLine();
-                    System.out.println("End date (YYYY-MM-DD):");
-                    String endToDate = scanner.nextLine();
                     break;
                 case 4:
                     System.out.print("| Last Year's Reports |");
@@ -235,11 +249,9 @@ public class Ledger {
                     for (Transaction transaction : transactions) {
                         System.out.println(transaction);
                         if(vendorName.equalsIgnoreCase(transaction.getVendor())){
-//                            System.out.println(transaction.getVendor());
-//                            break;
+                            System.out.println(transaction.getVendor());
                         }
                     }
-
                     break;
                 case 0:
                     return;

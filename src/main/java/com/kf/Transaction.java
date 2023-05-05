@@ -1,11 +1,11 @@
 package com.kf;
 
 public class Transaction {
-    private String date;
-    private String time;
-    private String desc;
-    private String vendor;
-    private float amount;
+    public  String date;
+    public  String time;
+    public  String desc;
+    public  String vendor;
+    public  float amount;
 
     public Transaction(String date, String time, String desc, String vendor, float amount) {
         this.date = date;
